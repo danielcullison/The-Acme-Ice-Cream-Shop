@@ -50,12 +50,16 @@ const deleteFlavor = async (flavorId) => {
 
 const updateFlavor = async (flavorId, newName, newFavoriteStatus) => {
   try {
-    await client.query(`
+    const { rows } = await client.query(
+      `
         UPDATE flavor
         SET name = $2, is_favorite = $3
         WHERE id = $1
         RETURNING *
-      `, [flavorId, newName, newFavoriteStatus]);
+      `,
+      [flavorId, newName, newFavoriteStatus]
+    );
+    return rows[0];
   } catch (err) {
     console.log("ERROR UPDATING FLAVOR: ", err);
   }
@@ -66,5 +70,5 @@ module.exports = {
   getFlavors: getFlavors,
   getSingleFlavor: getSingleFlavor,
   deleteFlavor: deleteFlavor,
-  updateFlavor: updateFlavor
+  updateFlavor: updateFlavor,
 };
