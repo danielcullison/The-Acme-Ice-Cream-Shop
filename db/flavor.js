@@ -48,7 +48,7 @@ const deleteFlavor = async (flavorId) => {
   }
 };
 
-const updateFlavor = async (flavorId, newName, newFavoriteStatus) => {
+const updateFlavor = async (flavorId, name, is_favorite) => {
   try {
     const { rows } = await client.query(
       `
@@ -57,7 +57,7 @@ const updateFlavor = async (flavorId, newName, newFavoriteStatus) => {
         WHERE id = $1
         RETURNING *
       `,
-      [flavorId, newName, newFavoriteStatus]
+      [flavorId, name, is_favorite]
     );
     return rows[0];
   } catch (err) {

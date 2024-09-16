@@ -36,7 +36,8 @@ app.get("/api/flavors/:id", async (req, res, next) => {
 
 app.post("/api/flavors", async (req, res, next) => {
   try {
-    const newFlavor = await createFlavor(req.body.name, req.body.is_favorite);
+    const { name, is_favorite } = req.body;
+    const newFlavor = await createFlavor(name, is_favorite);
 
     res.send(newFlavor);
   } catch (err) {
